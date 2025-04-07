@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(120deg, #ff9a9e, #fad0c4);
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            flex-direction: column;
+        }
+        .container {
+            text-align: center;
+            color: white;
+        }
+        
+        .wish {
+            font-size: 2rem;
+            font-weight: bold;
+            animation: fadeIn 2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .image-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        .image-container img {
+            width: 150px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: bounce 1.5s infinite alternate;
+        }
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+        @media(max-width:100px){
+                .gallery img{
+                    width: 100%;
+                }}
+                .balloons {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.balloon {
+    position: absolute;
+    bottom: -100px;
+    width: 30px;
+    height: 40px;
+    background: radial-gradient(circle, #ff6ec4, #7873f5);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    animation: floatUp 8s linear infinite;
+    opacity: 0.8;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(-120vh);
+        opacity: 0;
+    }
+}
+.wish::after {
+    content: "✨";
+    animation: sparkle 1s infinite alternate;
+    margin-left: 8px;
+}
+
+@keyframes sparkle {
+    0% { opacity: 0.3; transform: scale(1); }
+    100% { opacity: 1; transform: scale(1.3); }
+}
+.image-container img {
+    width: 150px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+    animation: bounce 1.5s infinite alternate, glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(255, 255, 255, 1);
+    }
+}
+.surprise-btn {
+    margin-top: 30px;
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    background-color: #ffffff;
+    color: #ff6ec4;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease;
+}
+.surprise-btn:hover {
+    transform: scale(1.05);
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup-content {
+    background-color: white;
+    color: #ff6ec4;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 1.5rem;
+    max-width: 80%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+#confettiCanvas {
+    position: fixed;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 999;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="balloons">
+            <div class="balloon" style="left: 10%; animation-delay: 0s;"></div>
+            <div class="balloon" style="left: 30%; animation-delay: 2s;"></div>
+            <div class="balloon" style="left: 50%; animation-delay: 4s;"></div>
+            <div class="balloon" style="left: 70%; animation-delay: 1s;"></div>
+            <div class="balloon" style="left: 90%; animation-delay: 3s;"></div>
+        </div>
+        <button class="surprise-btn" onclick="showSurprise()">🎁 Click for a Surprise!</button>
+        <canvas id="confettiCanvas"></canvas>
+
+<div id="popup" class="popup">
+    <div class="popup-content">
+        🎊 You're amazing, Arru Beta! Wishing you a day full of laughter, love, and cake! 🎂💖
+        <br><br>
+        <button onclick="closePopup()">Close</button>
+    </div>
+</div>
+        <div class="wish">🎉 Happy Birthday Arru Beta! 🎂</div>
+        <div class="image-container">
+            <img src="arhan.jpg" alt="Birthday Cake">
+            <img src="arhan3.jpg">
+            <img src="arhan4.jpg">
+            <img src="arhan5.jpg">
+            
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+<script>
+    function showSurprise() {
+        // Show popup
+        document.getElementById('popup').style.display = 'flex';
+        
+        // Confetti burst
+        const duration = 2 * 1000;
+        const end = Date.now() + duration;
+
+        (function frame() {
+            confetti({
+                particleCount: 7,
+                angle: 60,
+                spread: 55,
+                origin: { x: 0 },
+            });
+            confetti({
+                particleCount: 7,
+                angle: 120,
+                spread: 55,
+                origin: { x: 1 },
+            });
+
+            if (Date.now() < end) {
+                requestAnimationFrame(frame);
+            }
+        })();
+    }
+
+    function closePopup() {
+        document.getElementById('popup').style.display = 'none';
+    }
+</script>
+</body>
+</html>
